@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  
+<!-- SVOLTO FINO A BONUS 2 NIENTE PROMISE  -->
+
+  <body class="bg-green-400"> 
+    <main class="flex flex-col justify-center items-center gap-6">
+      <div id="divMago">
+        <div class="flex flex-col justify-center items-center gap-4">
+          <h1 class="text-4xl font-bold my-10">login Page</h1>
+          <input
+            class="text-center"
+            type="text"
+            id="username"
+            placeholder="username"
+          />
+
+          <input
+            class="text-center"
+            type="password"
+            id="password"
+            placeholder="password"
+          />
+        </div>
+        <div>
+          <button
+            id="btn"
+            class="bg-gray-50 px-16 py-3 mt-6"
+            onclick="makeLogin()"
+          >
+            Login
+          </button>
+        </div>
+        <div
+          class="hidden bg-red-600 font-bold text-center"
+          id="tentativiRimasti"
+        ></div>
+      </div>
+
+      <div id="login" class="hidden">
+        <div class="flex bg-red-400 p-4 text-lg font-bold text-center">
+          sei loggato <span id="usernameLogin"></span>
+        </div>
+      </div>
+
+      <div id="loginWait" class="hidden">
+        <div class="flex justify-center items-center align-top">
+          <img class="w-48" src="please-wait.gif" />
+        </div>
+      </div>
+    </main>
+
+    <script>
+        //counter per il numero di volte che si ha provato a loggare
+      let counterLogin = 0;
+        //prendo tutte gli elementi
+      function makeLogin() {
+        let username = document.getElementById("username").value;
+        let password = document.getElementById("password").value;
+        let btn = document.getElementById("btn");
+        let login = document.getElementById("login");
+        let usernameLogin = document.getElementById("usernameLogin");
+        let tentativiRimasti = document.getElementById("tentativiRimasti");
+        let divMago = document.getElementById("divMago");
+        let loginWait = document.getElementById("loginWait");
+
+        
+        //condizioni per il corretto login 
+
+        if (username == "eliaspower" && password == "cicalino") {
+          usernameLogin.innerHTML = " " + username + "!";
+          divMago.classList.add("hidden");
+          loginWait.classList.remove("hidden");
+
+        //funzione per far comparire la schermata login dopo 5 secondi
+
+          setTimeout(function () {
+            login.classList.remove("hidden");
+            loginWait.classList.add("hidden");
+          }, 5000);
+        } 
+
+        //condizioni login sbagliato
+
+        else {
+          counterLogin++;
+        }
+
+        //gestione 3 tentativi altrimenti errore 
+
+        if (counterLogin === 3) {
+          alert("hai provato troppe volte riprova più tardi");
+          divMago.classList.add("hidden");
+          tentativiRimasti.classList.add("hidden");
+        } else {
+          tentativiRimasti.innerHTML =
+            "credenziali non corretta, hai ancora" +
+            " " +
+            (3 - counterLogin) +
+            " " +
+            "tentativi rimanenti";
+          tentativiRimasti.classList.remove("hidden");
+        }
+      }
+    </script>
+  </body>
+</html>
